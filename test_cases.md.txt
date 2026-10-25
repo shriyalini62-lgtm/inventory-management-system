@@ -1,0 +1,38 @@
+# Review 3 manual test cases
+
+Run these against your own Oracle instance after setting the environment variables. Do not use real customer data for the demo.
+
+| ID | Test | Expected result |
+|---|---|---|
+| AUTH-01 | Visit `/` while signed out | Redirects to `/login`. |
+| AUTH-02 | Sign in with an incorrect password | Generic error; no password or database details shown. |
+| AUTH-03 | Sign in as admin | Dashboard and Users link are available. |
+| AUTH-04 | Create staff and viewer users | Users are listed with the selected roles. |
+| AUTH-05 | Sign in as viewer and POST to a product-changing route | HTTP 403; no database change. |
+| AUTH-06 | Submit a POST form without a CSRF token | HTTP 400; no database change. |
+| PROD-01 | Search by product name or code | Product list narrows to matching rows. |
+| PROD-02 | Filter by category | Only products in that category are shown. |
+| PROD-03 | Enable low-stock-only filter | Only products at/below reorder level are shown. |
+| PROD-04 | Admin adds a product | PRODUCT and initial INVENTORY row are created. |
+| PROD-05 | Admin updates price | New price persists after refresh. |
+| PROD-06 | Delete a product with transaction history | Database constraint is respected and a helpful message appears. |
+| CAT-01 | Admin adds/edits a category | Category changes persist. |
+| CAT-02 | Delete a category used by a product | Deletion is rejected by Oracle constraints. |
+| SUP-01 | Admin adds/edits a supplier | Supplier changes persist. |
+| SUP-02 | Add a duplicate supplier email | Operation is rejected; existing data remains unchanged. |
+| PUR-01 | Record a purchase | PURCHASE and PURCHASE_ITEM are inserted; stock increases. |
+| SAL-01 | Record a sale with enough stock | SALE and SALE_ITEM are inserted; stock decreases. |
+| SAL-02 | Attempt to sell more than available stock | Sale is rejected and stock remains unchanged. |
+| REP-01 | Filter reports by start/end date | Only transactions in the selected inclusive date range appear. |
+| REP-02 | Enter an end date before start date | Helpful validation message appears. |
+
+## Demo order
+
+1. Sign in as admin.
+2. Show dashboard, product search, category filter, and low-stock filter.
+3. Show category and supplier lists; demonstrate edit/create only with safe test records.
+4. Record a purchase and show stock increase.
+5. Record a sale and show stock decrease; demonstrate oversell rejection.
+6. Show date-filtered reports.
+7. Create a viewer account, sign in as viewer, and show that modification controls are hidden and direct POSTs are denied.
+8. Explain the Oracle schema is preserved and authentication accounts are stored in local `inventory_auth.db`.
